@@ -1,5 +1,6 @@
 class CustomSound {
   constructor(path) {
+    this.path = path;
     this.audio = new Audio(path);
   }
 
@@ -24,41 +25,42 @@ class CustomSound {
     this.audio.currentTime = 0;
   }
 
-  fadeOut() {
-    CustomSound.animateValue(
-      this.audio.volume,
-      0,
-      1000,
-      (value) => (this.audio.volume = value)
-    );
+  fade(target) {
+    if (abs(this.audio.volume - target) < 0.05) {
+      this.audio.volume = target;
+    } else {
+      if (this.audio.volume > target) {
+        this.audio.volume -= 0.02;
+      } else {
+        this.audio.volume += 0.02;
+      }
+      setTimeout(() => this.fade(target), 20);
+    }
   }
 
-  fadeIn() {
-    CustomSound.animateValue(
-      this.audio.volume,
-      1,
-      1000,
-      (value) => (this.audio.volume = value)
-    );
+  volume(value) {
+    if (value !== undefined) {
+      this.audio.volume = value;
+    } else {
+      return value;
+    }
   }
 
   onended(callback) {
     this.audio.onended = callback;
   }
 
-  static animateValue(start, end, duration, callback) {
-    if (start === end) return;
-    const range = end - start;
-    const increment = end > start ? 1 : -1;
-    const stepTime = Math.abs(Math.floor(duration / range));
-
-    let current = start;
-    const timer = setInterval(() => {
-      current += increment;
-      callback(current);
-      if (current == end) {
-        clearInterval(timer);
-      }
-    }, stepTime);
+  static chain(sounds) {
+    if (sounds.length == 0) {
+      return;
+    }
+    print(sounds)
+    for (let i = 0; i < sounds.length - 1; i++) {
+      let curr = sounds[i];
+      let next = sounds[i + 1];
+      curr.onended(() => next.play());
+    }
+    sounds[0].play();
+    return sounds[sounds.length - 1];
   }
 }
