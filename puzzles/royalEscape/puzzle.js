@@ -2,11 +2,11 @@ var puzzles = puzzles || {};
 
 puzzles.royalEscape = (context) => {
   const images = {
-    blue: "/puzzles/royalEscape/blue.png",
-    green: "/puzzles/royalEscape/green.png",
-    red: "/puzzles/royalEscape/red.png",
-    purple: "/puzzles/royalEscape/purple.png",
-    board: "/puzzles/royalEscape/board2.png",
+    blue: makeImage("puzzles/royalEscape/blue.png"),
+    green: makeImage("puzzles/royalEscape/green.png"),
+    red: makeImage("puzzles/royalEscape/red.png"),
+    purple: makeImage("puzzles/royalEscape/purple.png"),
+    board: makeImage("puzzles/royalEscape/board2.png"),
   };
 
   const blueSettings = {

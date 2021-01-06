@@ -2,11 +2,11 @@ var puzzles = puzzles || {};
 
 puzzles.getTheBallOut4 = (context) => {
   const images = {
-    blue: "puzzles/getTheBallOut4/blue.png",
-    green: "puzzles/getTheBallOut4/green.png",
-    ball: "puzzles/getTheBallOut4/ball.png",
-    yellow: "puzzles/getTheBallOut4/yellow.png",
-    purple: "puzzles/getTheBallOut4/purple.png",
+    blue: makeImage("puzzles/getTheBallOut4/blue.png"),
+    green: makeImage("puzzles/getTheBallOut4/green.png"),
+    ball: makeImage("puzzles/getTheBallOut4/ball.png"),
+    yellow: makeImage("puzzles/getTheBallOut4/yellow.png"),
+    purple: makeImage("puzzles/getTheBallOut4/purple.png"),
     board: makeImage("puzzles/getTheBallOut4/board.jpg"),
   };
 
