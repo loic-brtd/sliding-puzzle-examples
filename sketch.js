@@ -24,7 +24,7 @@ function preload() {
   if (params.get('puzzle') in puzzles) {
     puzzle = puzzles[params.get('puzzle')]({ assets });
   } else {
-    puzzle = puzzles.getTheBallOut4({ assets });
+    createDiv(listPuzzles())
   }
 
   // puzzle = puzzles.royalEscape({ assets });
@@ -32,7 +32,7 @@ function preload() {
 }
 
 function setup() {
-  // let canvas;
+  if (!puzzle) return;
 
   if (puzzle.background) {
     waitFor(() => puzzle.background.complete).toExecute(() => {
@@ -93,9 +93,8 @@ function setup() {
 
 function draw() {
 
-  if (!ready) {
-    return;
-  }
+  if (!puzzle) return;
+  if (!ready) return;
 
   puzzle.draw(renderer);
 }

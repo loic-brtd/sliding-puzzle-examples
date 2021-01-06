@@ -39,3 +39,15 @@ function drawCount(renderer, count) {
   noStroke();
   text(count, width / 2 + unit * 0.45, unit * 0.48);
 }
+
+function listPuzzles() {
+  const style = 'color: white; font-size: 20px; text-align: center; line-height: 2;';
+  const url = location.protocol + '//' + location.host + location.pathname;
+  let links = `<ul>
+    ${Object.keys(puzzles)
+      .map(name => url + '?puzzle=' + name)
+      .map(link => `<li><a href="${link}" style="${style}">${link}</a></li>`)
+      .join('')}
+              </ul>`;
+  return links;
+}
