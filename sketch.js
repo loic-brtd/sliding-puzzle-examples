@@ -15,12 +15,20 @@ function preload() {
       inPlace: new CustomSound("audio/in_place.wav"),
     },
     fonts: {
-      mono: loadFont("fonts/prof-layton.ttf"),
+      mono: loadFont("fonts/goodbyeDespair.ttf"),
+      // mono: loadFont("fonts/prof-layton.ttf"),
     },
   };
 
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('puzzle') in puzzles) {
+    puzzle = puzzles[params.get('puzzle')]({ assets });
+  } else {
+    puzzle = puzzles.getTheBallOut4({ assets });
+  }
+
   // puzzle = puzzles.royalEscape({ assets });
-  puzzle = puzzles.getTheBallOut4({ assets });
+  // puzzle = puzzles.getTheBallOut4({ assets });
 }
 
 function setup() {

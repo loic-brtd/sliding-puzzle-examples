@@ -43,16 +43,16 @@ puzzles.getTheBallOut4 = (context) => {
   });
 
   const blocks = [
-    // makeBlock(0, 1, blueSettings),
-    // makeBlock(2, 4, blueSettings),
+    makeBlock(0, 1, blueSettings),
+    makeBlock(2, 4, blueSettings),
 
-    // makeBlock(0, 2, greenSettings),
-    // makeBlock(3, 2, greenSettings),
+    makeBlock(0, 2, greenSettings),
+    makeBlock(3, 2, greenSettings),
 
-    // makeBlock(2, 1, purpleSettings),
-    // makeBlock(3, 1, purpleSettings),
-    // makeBlock(0, 4, purpleSettings),
-    // makeBlock(1, 4, purpleSettings),
+    makeBlock(2, 1, purpleSettings),
+    makeBlock(3, 1, purpleSettings),
+    makeBlock(0, 4, purpleSettings),
+    makeBlock(1, 4, purpleSettings),
 
     new SlidingPuzzle.Block({
       x: 1,
@@ -112,7 +112,6 @@ puzzles.getTheBallOut4 = (context) => {
       textFont(context.assets.fonts.mono);
       textAlign(RIGHT, CENTER);
       textSize(renderer.unit * 0.35);
-      textStyle(BOLD);
 
       board.on("continuousMove", (block) => moves++);
       board.on("move", (block) => {
@@ -146,16 +145,7 @@ puzzles.getTheBallOut4 = (context) => {
     },
     onDraw: (renderer) => {
       renderer.render();
-
-      const unit = renderer.unit;
-
-      fill("#1B1A1B");
-      stroke("#6E4826");
-      rect(width / 2 - unit / 2, unit / 3, unit, unit / 3);
-
-      fill("#ED050D");
-      noStroke();
-      text(moves, width / 2 + unit * 0.45, unit * 0.48);
+      drawCount(renderer, moves);
     },
   });
 };

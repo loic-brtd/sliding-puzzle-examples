@@ -119,26 +119,20 @@ puzzles.royalEscape = (context) => {
 
         // Player wins
         if (!wonTheGame && block.tag === "red" && block.x > 6) {
-          wonTheGame = true;
-          sounds.suspens.onended(() => sounds.success.play());
-          sounds.success.onended(() => sounds.ambiant.fadeIn());
-          sounds.ambiant.fadeOut();
-          setTimeout(() => sounds.suspens.play(), 1000);
+          setTimeout(() => {
+            sounds.inPlace.play();
+            sounds.ambiant.fade(0);
+            setTimeout(() => {
+              CustomSound.chain([sounds.suspens, sounds.success])
+                .onended(() => sounds.ambiant.fade(1));
+            }, 1000);
+          }, 300);
         }
       });
     },
     onDraw: (renderer) => {
       renderer.render();
-
-      const unit = renderer.unit;
-
-      fill("#1B1A1B");
-      stroke("#6E4826");
-      rect(width / 2 - unit / 2, unit / 3, unit, unit / 3);
-
-      fill("#ED050D");
-      noStroke();
-      text(moves, width / 2 + unit * 0.45, unit * 0.48);
+      drawCount(renderer, moves);
     },
   });
 };

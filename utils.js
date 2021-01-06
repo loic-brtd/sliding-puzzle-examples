@@ -27,3 +27,15 @@ function waitFor(condition) {
   };
   return { toExecute };
 }
+
+function drawCount(renderer, count) {
+  const unit = renderer.unit;
+
+  fill("#1B1A1B");
+  stroke("#6E4826");
+  rect(width / 2 - unit / 2, unit / 3, unit, unit / 3);
+
+  fill("#ED050D");
+  noStroke();
+  text(count, width / 2 + unit * 0.45, unit * 0.48);
+}

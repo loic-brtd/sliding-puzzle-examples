@@ -54,7 +54,6 @@ class CustomSound {
     if (sounds.length == 0) {
       return;
     }
-    print(sounds)
     for (let i = 0; i < sounds.length - 1; i++) {
       let curr = sounds[i];
       let next = sounds[i + 1];
