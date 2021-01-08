@@ -1,12 +1,13 @@
 var puzzles = puzzles || {};
 
 puzzles.royalEscape = (context) => {
+  const dir = "src/puzzles/royalEscape/";
   const images = {
-    blue: makeImage("puzzles/royalEscape/blue.png"),
-    green: makeImage("puzzles/royalEscape/green.png"),
-    red: makeImage("puzzles/royalEscape/red.png"),
-    purple: makeImage("puzzles/royalEscape/purple.png"),
-    board: makeImage("puzzles/royalEscape/board2.png"),
+    blue: makeImage(dir + "blue.png"),
+    green: makeImage(dir + "green.png"),
+    red: makeImage(dir + "red.png"),
+    purple: makeImage(dir + "purple.png"),
+    board: makeImage(dir + "board2.png"),
   };
 
   const blueSettings = {
@@ -29,15 +30,15 @@ puzzles.royalEscape = (context) => {
   }
 
   const finishBlock = new SlidingPuzzle.Block({
-    x: 6,
-    y: 2,
+    x: 5,
+    y: 1,
     shape: [[1], [1]],
     selectable: false,
   });
 
   const redBlock = new SlidingPuzzle.Block({
-    x: 1,
-    y: 2,
+    x: 0,
+    y: 1,
     shape: [
       [1, 1],
       [1, 1],
@@ -48,27 +49,27 @@ puzzles.royalEscape = (context) => {
   });
 
   const blocks = [
-    makeBlock(1, 1, blueSettings),
-    makeBlock(3, 1, blueSettings),
-    makeBlock(1, 4, blueSettings),
-    makeBlock(3, 4, blueSettings),
+    makeBlock(0, 0, blueSettings),
+    makeBlock(2, 0, blueSettings),
+    makeBlock(0, 3, blueSettings),
+    makeBlock(2, 3, blueSettings),
 
-    makeBlock(5, 1, greenSettings),
-    makeBlock(4, 2, greenSettings),
+    makeBlock(4, 0, greenSettings),
+    makeBlock(3, 1, greenSettings),
+    makeBlock(3, 2, greenSettings),
     makeBlock(4, 3, greenSettings),
-    makeBlock(5, 4, greenSettings),
 
     new SlidingPuzzle.Block({
-      x: 3,
-      y: 2,
+      x: 2,
+      y: 1,
       shape: [[1], [1]],
       image: images.purple,
     }),
   ];
 
   const boundaries = new SlidingPuzzle.Block({
-    x: 0,
-    y: 0,
+    x: -1,
+    y: -1,
     shape: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 0, 0, 0, 0, 0, 1, 1, 1],
@@ -81,9 +82,8 @@ puzzles.royalEscape = (context) => {
   });
 
   const board = new SlidingPuzzle.Board({
-    cols: 9,
-    rows: 6,
-    image: images.board,
+    cols: 8,
+    rows: 4,
   });
 
   board.addBlock(boundaries);
@@ -98,15 +98,16 @@ puzzles.royalEscape = (context) => {
   const sounds = context.assets.sounds;
 
   return new Puzzle({
-    renderer,
+    background: images.board,
+    proportions: {
+      x: 1 / 9,
+      y: 1 / 6,
+      width: 8 / 9,
+      height: 4 / 6,
+    },
     board,
-    onSetup: (renderer) => {
+    onSetup: () => {
       board.savePositions();
-
-      textFont(context.assets.fonts.mono);
-      textAlign(RIGHT, CENTER);
-      textSize(renderer.unit * 0.35);
-
       board.on("continuousMove", (block) => moves++);
       board.on("move", (block) => {
         sounds.move.play();
@@ -129,10 +130,6 @@ puzzles.royalEscape = (context) => {
           }, 300);
         }
       });
-    },
-    onDraw: (renderer) => {
-      renderer.render();
-      drawCount(renderer, moves);
-    },
+    }
   });
 };

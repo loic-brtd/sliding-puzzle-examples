@@ -18,3 +18,18 @@ canvas {
   display: block;
   margin: auto;
 }
+
+.block {
+  /* border: 1px solid white; */
+  user-select: none;
+}
+
+#background {
+  /* border: 1px solid green; */
+  user-select: none;
+}
+
+#puzzle {
+  /* border: 1px solid red; */
+  user-select: none;
+}

@@ -2,12 +2,12 @@ var puzzles = puzzles || {};
 
 puzzles.getTheBallOut4 = (context) => {
   const images = {
-    blue: makeImage("puzzles/getTheBallOut4/blue.png"),
-    green: makeImage("puzzles/getTheBallOut4/green.png"),
-    ball: makeImage("puzzles/getTheBallOut4/ball.png"),
-    yellow: makeImage("puzzles/getTheBallOut4/yellow.png"),
-    purple: makeImage("puzzles/getTheBallOut4/purple.png"),
-    board: makeImage("puzzles/getTheBallOut4/board.jpg"),
+    blue: makeImage("src/puzzles/getTheBallOut4/blue.png"),
+    green: makeImage("src/puzzles/getTheBallOut4/green.png"),
+    ball: makeImage("src/puzzles/getTheBallOut4/ball.png"),
+    yellow: makeImage("src/puzzles/getTheBallOut4/yellow.png"),
+    purple: makeImage("src/puzzles/getTheBallOut4/purple.png"),
+    board: makeImage("src/puzzles/getTheBallOut4/board.jpg"),
   };
 
   const blueSettings = {
@@ -98,21 +98,15 @@ puzzles.getTheBallOut4 = (context) => {
 
   return new Puzzle({
     background: images.board,
-    canvasProportions: {
+    proportions: {
       x: 320 / 1024,
       y: 127 / 768,
       width: 384 / 1024,
       height: 576 / 768,
     },
-    renderer,
     board,
-    onSetup: (renderer) => {
+    onSetup: () => {
       board.savePositions();
-
-      textFont(context.assets.fonts.mono);
-      textAlign(RIGHT, CENTER);
-      textSize(renderer.unit * 0.35);
-
       board.on("continuousMove", (block) => moves++);
       board.on("move", (block) => {
         sounds.move.play();
@@ -142,10 +136,6 @@ puzzles.getTheBallOut4 = (context) => {
           }, 300);
         }
       });
-    },
-    onDraw: (renderer) => {
-      renderer.render();
-      drawCount(renderer, moves);
-    },
+    }
   });
 };
