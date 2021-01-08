@@ -87,11 +87,14 @@ class HTMLRenderer {
     this.backgroundDiv.style.position = 'relative';
     this.backgroundDiv.style.margin = 'auto';
     this.backgroundDiv.id = 'background';
-    
+
+    if (board.color) {
+      this.backgroundDiv.backgroundColor = board.color;
+    }
     if (backgroundImage) {
       this._applyBackground(this.backgroundDiv, backgroundImage.src);
     }
-    
+
     // Puzzle
     this.boardDiv = document.createElement('div');
     this.boardDiv.style.position = 'absolute';
@@ -115,6 +118,9 @@ class HTMLRenderer {
         height: block.rows / board.rows,
       });
 
+      if (block.color) {
+        div.style.backgroundColor = block.color;
+      }
       if (block.imagePath) {
         this._applyBackground(div, block.imagePath);
       }
@@ -138,36 +144,47 @@ class HTMLRenderer {
     element.style.backgroundRepeat = 'no-repeat';
   }
 
-  _callbackMouseCoord(event) {
+  _callbackMouseCoord(event, type) {
     const rect = this.boardDiv.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width * this.board.cols; // [0..cols]
-    const y = (event.clientY - rect.top) / rect.height * this.board.rows; // [0..rows]
+
+    const pos = (type === 'mouse')
+      ? { x: event.clientX, y: event.clientY }
+      : { x: event.touches[0].pageX, y: event.touches[0].pageY };
+
+    const x = (pos.x - rect.left) / rect.width * this.board.cols; // [0..cols]
+    const y = (pos.y - rect.top) / rect.height * this.board.rows; // [0..rows]
+
     return { x, y };
   }
 
   onMousePressed(callback) {
-    this.boardDiv.addEventListener('mousedown', e => {
+    const handler = (e, type) => {
       this.mouseIsPressed = true;
-      const { x, y } = this._callbackMouseCoord(e);
+      const { x, y } = this._callbackMouseCoord(e, type);
       callback(x, y);
-    });
+    }
+    this.boardDiv.addEventListener('mousedown', e => handler(e, 'mouse'));
+    this.boardDiv.addEventListener('touchstart', e => handler(e, 'touch'));
   }
 
   onMouseDragged(callback) {
-    this.boardDiv.addEventListener('mousemove', e => {
+    const handler = (e, type) => {
       if (this.mouseIsPressed) {
-        const { x, y } = this._callbackMouseCoord(e);
+        const { x, y } = this._callbackMouseCoord(e, type);
         callback(x, y);
       }
-    });
+    }
+    this.boardDiv.addEventListener('mousemove', e => handler(e, 'mouse'));
+    this.boardDiv.addEventListener('touchmove', e => handler(e, 'touch'));
   }
 
   onMouseReleased(callback) {
-    this.boardDiv.addEventListener('mouseup', e => {
+    const handler = () => {
+      callback();
       this.mouseIsPressed = false;
-      const { x, y } = this._callbackMouseCoord(e);
-      callback(x, y);
-    });
+    }
+    this.boardDiv.addEventListener('mouseup', handler);
+    this.boardDiv.addEventListener('touchend', handler);
   }
 
   render(block = null) {

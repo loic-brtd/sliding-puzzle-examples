@@ -34,25 +34,27 @@ function setup() {
   if (!puzzle) return;
 
   if (puzzle.background) {
-    onImageLoad(puzzle.background, () => {
-      ready = true;
-
-      document.querySelector('.loader').remove();
-
-      const container = document.querySelector("#canvas-container");
-
-      renderer = new HTMLRenderer({
-        parentElement: container,
-        board: puzzle.board,
-        proportions: puzzle.proportions,
-        backgroundImage: puzzle.background,
-      });
-
-      renderer.onMousePressed((x, y) => puzzle.board.mousePressed(x, y));
-      renderer.onMouseDragged((x, y) => puzzle.board.mouseDragged(x, y));
-      renderer.onMouseReleased(() => puzzle.board.mouseReleased());
-      puzzle.board.on('animation', block => renderer.render(block));
-      puzzle.setup();
-    });
+    onImageLoad(puzzle.background, init);
   }
+}
+
+function init() {
+  ready = true;
+
+  document.querySelector('.loader').remove();
+
+  const container = document.querySelector("#canvas-container");
+
+  renderer = new HTMLRenderer({
+    parentElement: container,
+    board: puzzle.board,
+    proportions: puzzle.proportions,
+    backgroundImage: puzzle.background,
+  });
+
+  renderer.onMousePressed((x, y) => puzzle.board.mousePressed(x, y));
+  renderer.onMouseDragged((x, y) => puzzle.board.mouseDragged(x, y));
+  renderer.onMouseReleased(() => puzzle.board.mouseReleased());
+  puzzle.board.on('animation', block => renderer.render(block));
+  puzzle.setup();
 }
