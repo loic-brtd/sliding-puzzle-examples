@@ -49,20 +49,11 @@ function setup() {
         backgroundImage: puzzle.background,
       });
 
-      renderer.onMousePressed((x, y) => {
-        puzzle.board.mousePressed(x, y)
-      });
-      renderer.onMouseDragged((x, y) => {
-        puzzle.board.mouseDragged(x, y)
-      });
-      renderer.onMouseReleased((x, y) => {
-        puzzle.board.mouseReleased()
-      });
-      puzzle.board.on('animation', block => {
-        renderer.render(block);
-      })
-
-      puzzle.setup(renderer);
+      renderer.onMousePressed((x, y) => puzzle.board.mousePressed(x, y));
+      renderer.onMouseDragged((x, y) => puzzle.board.mouseDragged(x, y));
+      renderer.onMouseReleased((x, y) => puzzle.board.mouseReleased());
+      puzzle.board.on('animation', block => renderer.render(block));
+      puzzle.setup();
     });
   }
 }
