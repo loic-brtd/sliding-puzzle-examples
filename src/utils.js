@@ -71,12 +71,12 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
       sounds.inPlace.play();
 
       if (!wonTheGame) {
-        sounds.ambiant.fade(0);
+        // sounds.ambiant.fade(0);
         setTimeout(() => {
           // CustomSound.chain([sounds.suspens, sounds.success])
           //   .onended(() => sounds.ambiant.fade(1));
           sounds.success.play();
-          sounds.success.onended(() => sounds.ambiant.fade(1));
+          // sounds.success.onended(() => sounds.ambiant.fade(1));
         }, 1000);
         wonTheGame = true;
       }

@@ -9,7 +9,7 @@ function preload() {
 
   assets = {
     sounds: {
-      ambiant: new CustomSound("src/audio/puzzle_theme.mp3"),
+      // ambiant: new CustomSound("src/audio/puzzle_theme.mp3"),
       move: new CustomSound("src/audio/move3.wav"),
       suspens: new CustomSound("src/audio/suspens.wav"),
       success: new CustomSound("src/audio/success.wav"),
