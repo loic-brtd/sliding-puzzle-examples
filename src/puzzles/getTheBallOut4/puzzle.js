@@ -1,13 +1,14 @@
 var puzzles = puzzles || {};
 
 puzzles.getTheBallOut4 = (context) => {
+  const path = 'src/puzzles/getTheBallOut4/images/'
   const images = {
-    blue: makeImage("src/puzzles/getTheBallOut4/blue.png"),
-    green: makeImage("src/puzzles/getTheBallOut4/green.png"),
-    ball: makeImage("src/puzzles/getTheBallOut4/ball.png"),
-    yellow: makeImage("src/puzzles/getTheBallOut4/yellow.png"),
-    purple: makeImage("src/puzzles/getTheBallOut4/purple.png"),
-    board: makeImage("src/puzzles/getTheBallOut4/board.jpg"),
+    blue: makeImage(path + 'blue.jpg'),
+    green: makeImage(path + 'green.jpg'),
+    ball: makeImage(path + 'ball.png'),
+    yellow: makeImage(path + 'yellow.jpg'),
+    purple: makeImage(path + 'purple.jpg'),
+    board: makeImage(path + 'board.jpg'),
   };
 
   const blueSettings = {

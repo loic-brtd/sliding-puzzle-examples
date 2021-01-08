@@ -1,13 +1,13 @@
 var puzzles = puzzles || {};
 
 puzzles.royalEscape = (context) => {
-  const dir = "src/puzzles/royalEscape/";
+  const dir = "src/puzzles/royalEscape/images/";
   const images = {
-    blue: makeImage(dir + "blue.png"),
-    green: makeImage(dir + "green.png"),
-    red: makeImage(dir + "red.png"),
-    purple: makeImage(dir + "purple.png"),
-    board: makeImage(dir + "board2.png"),
+    blue: makeImage(dir + "blue.jpg"),
+    green: makeImage(dir + "green.jpg"),
+    red: makeImage(dir + "red.jpg"),
+    purple: makeImage(dir + "purple.jpg"),
+    board: makeImage(dir + "board2.jpg"),
   };
 
   const blueSettings = {

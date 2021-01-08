@@ -15,7 +15,7 @@ function preload() {
       inPlace: new CustomSound("src/audio/in_place.wav"),
     },
     fonts: {
-      mono: loadFont("src/fonts/goodbyeDespair.ttf"),
+      // mono: loadFont("src/fonts/goodbyeDespair.ttf"),
       // mono: loadFont("fonts/prof-layton.ttf"),
     },
   };
