@@ -25,6 +25,7 @@ function preload() {
   if (params.get('puzzle') in puzzles) {
     puzzle = puzzles[params.get('puzzle')]({ assets });
   } else {
+    document.querySelector('.loader').remove();
     createDiv(listPuzzles()).parent('#canvas-container')
   }
 }

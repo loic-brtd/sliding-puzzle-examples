@@ -159,6 +159,7 @@ class HTMLRenderer {
 
   onMousePressed(callback) {
     const handler = (e, type) => {
+      e.preventDefault();
       this.mouseIsPressed = true;
       const { x, y } = this._callbackMouseCoord(e, type);
       callback(x, y);
@@ -169,6 +170,7 @@ class HTMLRenderer {
 
   onMouseDragged(callback) {
     const handler = (e, type) => {
+      e.preventDefault();
       if (this.mouseIsPressed) {
         const { x, y } = this._callbackMouseCoord(e, type);
         callback(x, y);
@@ -179,12 +181,13 @@ class HTMLRenderer {
   }
 
   onMouseReleased(callback) {
-    const handler = () => {
+    const handler = e => {
+      e.preventDefault();
       callback();
       this.mouseIsPressed = false;
     }
-    this.boardDiv.addEventListener('mouseup', handler);
-    this.boardDiv.addEventListener('touchend', handler);
+    this.boardDiv.addEventListener('mouseup', e => handler(e));
+    this.boardDiv.addEventListener('touchend', e => handler(e));
   }
 
   render(block = null) {
