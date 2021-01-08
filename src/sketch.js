@@ -6,6 +6,7 @@ let canvas;
 let ready = false;
 
 function preload() {
+
   assets = {
     sounds: {
       ambiant: new CustomSound("src/audio/puzzle_theme.mp3"),
@@ -24,34 +25,32 @@ function preload() {
   if (params.get('puzzle') in puzzles) {
     puzzle = puzzles[params.get('puzzle')]({ assets });
   } else {
-    createDiv(listPuzzles())
+    createDiv(listPuzzles()).parent('#canvas-container')
   }
-
-  // puzzle = puzzles.royalEscape({ assets });
-  // puzzle = puzzles.getTheBallOut4({ assets });
 }
 
 function setup() {
+  noCanvas();
   if (!puzzle) return;
 
   if (puzzle.background) {
     onImageLoad(puzzle.background, () => {
       ready = true;
 
+      document.querySelector('.loader').remove();
+
       const container = document.querySelector("#canvas-container");
-      container.style.width = '100%';
-      container.style.height = '100%';
 
       renderer = new HTMLRenderer({
-        board: puzzle.board,
         parentElement: container,
+        board: puzzle.board,
         proportions: puzzle.proportions,
         backgroundImage: puzzle.background,
       });
 
       renderer.onMousePressed((x, y) => puzzle.board.mousePressed(x, y));
       renderer.onMouseDragged((x, y) => puzzle.board.mouseDragged(x, y));
-      renderer.onMouseReleased((x, y) => puzzle.board.mouseReleased());
+      renderer.onMouseReleased(() => puzzle.board.mouseReleased());
       puzzle.board.on('animation', block => renderer.render(block));
       puzzle.setup();
     });

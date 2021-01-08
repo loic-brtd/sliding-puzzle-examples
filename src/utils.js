@@ -27,17 +27,6 @@ function onImageLoad(image, callback) {
   }
 }
 
-function waitFor(condition) {
-  const toExecute = (callback) => {
-    if (!condition()) {
-      setTimeout(() => toExecute(callback), 100);
-    } else {
-      callback();
-    }
-  };
-  return { toExecute };
-}
-
 function drawCount(renderer, count) {
   const unit = renderer.unit;
 
@@ -70,11 +59,13 @@ class HTMLRenderer {
     backgroundImage,
   }) {
     this.board = board;
-    this.parentElement = parentElement;
     this.proportions = proportions;
+    this.parentElement = parentElement;
 
     // Background
     this.backgroundDiv = document.createElement('div');
+    this.parentElement.style.display = 'grid';
+    this.parentElement.appendChild(this.backgroundDiv);
 
     const resize = () => {
       const bounds = this.parentElement.getBoundingClientRect();
@@ -94,20 +85,18 @@ class HTMLRenderer {
     observer.observe(this.parentElement)
 
     this.backgroundDiv.style.position = 'relative';
-    this.parentElement.style.display = 'grid';
     this.backgroundDiv.style.margin = 'auto';
     this.backgroundDiv.id = 'background';
-
+    
     if (backgroundImage) {
       this._applyBackground(this.backgroundDiv, backgroundImage.src);
     }
-    this.parentElement.appendChild(this.backgroundDiv);
-
+    
     // Puzzle
     this.boardDiv = document.createElement('div');
     this.boardDiv.style.position = 'absolute';
     this._applyProportions(this.boardDiv, proportions);
-    this.boardDiv.id = 'puzzle';
+    this.boardDiv.id = 'board';
     this.backgroundDiv.appendChild(this.boardDiv);
 
     // Blocks

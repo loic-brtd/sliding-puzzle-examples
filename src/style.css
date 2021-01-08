@@ -8,10 +8,8 @@ body {
 }
 
 #canvas-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
 }
 
 canvas {
@@ -20,16 +18,31 @@ canvas {
 }
 
 .block {
-  /* border: 1px solid white; */
   user-select: none;
 }
 
 #background {
-  /* border: 1px solid green; */
   user-select: none;
 }
 
-#puzzle {
-  /* border: 1px solid red; */
+#board {
   user-select: none;
+}
+
+.loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-24px, -24px);
+  border: 4px solid white;
+  border-top: 4px solid lightseagreen;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
