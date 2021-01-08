@@ -103,36 +103,9 @@ puzzles.getTheBallOut1 = (context) => {
     },
     board,
     onSetup: () => {
-      board.savePositions();
-      board.on("continuousMove", (block) => moves++);
-      board.on("move", (block) => {
-        sounds.move.play();
-
-        // First move
-        if (movedOnce === false) {
-          sounds.ambiant.loop();
-          movedOnce = true;
-        }
-
-        // Player wins
-        if (
-          !wonTheGame &&
-          block.tag === "ball" &&
-          block.x === 2 &&
-          block.y === 5
-        ) {
-          wonTheGame = true;
-
-          setTimeout(() => {
-            sounds.inPlace.play();
-            sounds.ambiant.fade(0);
-            setTimeout(() => {
-              CustomSound.chain([sounds.suspens, sounds.success])
-                .onended(() => sounds.ambiant.fade(1));
-            }, 1000);
-          }, 300);
-        }
-      });
+      const winningPlace = (block) => block.tag === 'ball'
+        && block.x === 2 && block.y === 5;
+      sharedPuzzleSetup({ context, board, winningPlace });
     }
   });
 };

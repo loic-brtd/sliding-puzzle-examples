@@ -82,10 +82,7 @@ puzzles.getTheBallOut4 = (context) => {
     selectable: false,
   });
 
-  const board = new SlidingPuzzle.Board({
-    cols: 4,
-    rows: 6,
-  });
+  const board = new SlidingPuzzle.Board({ cols: 4, rows: 6 });
 
   board.addBlock(boundaries);
   board.addBlock(ball);
@@ -107,36 +104,9 @@ puzzles.getTheBallOut4 = (context) => {
     },
     board,
     onSetup: () => {
-      board.savePositions();
-      board.on("continuousMove", (block) => moves++);
-      board.on("move", (block) => {
-        sounds.move.play();
-
-        // First move
-        if (movedOnce === false) {
-          sounds.ambiant.loop();
-          movedOnce = true;
-        }
-
-        // Player wins
-        if (
-          !wonTheGame &&
-          block.tag === "ball" &&
-          block.x === 3 &&
-          block.y === 5
-        ) {
-          wonTheGame = true;
-
-          setTimeout(() => {
-            sounds.inPlace.play();
-            sounds.ambiant.fade(0);
-            setTimeout(() => {
-              CustomSound.chain([sounds.suspens, sounds.success])
-                .onended(() => sounds.ambiant.fade(1));
-            }, 1000);
-          }, 300);
-        }
-      });
-    }
+      const winningPlace = (block) => block.tag === 'ball'
+        && block.x === 3 && block.y === 5;
+        sharedPuzzleSetup({ context, board, winningPlace });
+      }
   });
 };
