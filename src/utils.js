@@ -60,14 +60,16 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
   movesElement.innerHTML = moves;
 
   const resetButton = document.querySelector('#reset');
-  resetButton.addEventListener('click', () => {
+  const reset = () => {
     board.restorePositions();
     moves = 0;
     wonTheGame = false;
     renderer.render();
     movesElement.innerHTML = moves;
     sounds.reset.play();
-  });
+  }
+  resetButton.addEventListener('click', reset);
+  resetButton.addEventListener('touchstart', reset);
 
   board.savePositions();
   board.on("continuousMove", () => {
