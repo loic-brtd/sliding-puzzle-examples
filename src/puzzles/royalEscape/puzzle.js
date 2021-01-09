@@ -91,19 +91,9 @@ puzzles.royalEscape = (context) => {
   board.addBlock(redBlock);
   blocks.forEach((b) => board.addBlock(b));
 
-  let movedOnce = false;
-  let wonTheGame = false;
-  let moves = 0;
-
-  const sounds = context.assets.sounds;
-
   return new Puzzle({
     background: images.board,
     proportions: {
-      // x: 1 / 9,
-      // y: 1 / 6,
-      // width: 8 / 9,
-      // height: 4 / 6,
       x: 16 / 256,
       y: 48 / 192,
       width: 256 / 256,

@@ -88,12 +88,6 @@ puzzles.getTheBallOut4 = (context) => {
   board.addBlock(ball);
   blocks.forEach((b) => board.addBlock(b));
 
-  let movedOnce = false;
-  let wonTheGame = false;
-  let moves = 0;
-
-  const sounds = context.assets.sounds;
-
   return new Puzzle({
     background: images.board,
     proportions: {

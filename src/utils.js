@@ -54,7 +54,7 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
   const sounds = context.assets.sounds;
   let wonTheGame = false;
   let moves = 0;
-  let movedOnce = false;
+  let userInteracted = false;
 
   const movesElement = document.querySelector("#moves");
   movesElement.innerHTML = moves;
@@ -72,20 +72,20 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
   resetButton.addEventListener('touchstart', reset);
 
   board.savePositions();
-  board.on("continuousMove", () => {
+  board.on("fullMoveEnd", () => {
     moves++
     movesElement.innerHTML = moves;
   });
-  board.on("move", (block) => {
+  board.on("moveStart", (block) => {
+    sounds.move.play();
 
-    // First move
-    // if (!movedOnce) {
+    // if (!userInteracted) {
     //   sounds.ambiant.loop();
-    //   movedOnce = true;
+    //   userInteracted = true;
     // }
-
+  });
+  board.on("moveEnd", (block) => {
     if (winningPlace(block)) {
-      // Locked in place
       sounds.inPlace.play();
 
       if (!wonTheGame) {
@@ -93,14 +93,12 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
         setTimeout(() => {
           // CustomSound.chain([sounds.suspens, sounds.success])
           //   .onended(() => sounds.ambiant.fade(1));
-          sounds.success.play();
           // sounds.success.onended(() => sounds.ambiant.fade(1));
+
+          sounds.success.play();
         }, 1000);
         wonTheGame = true;
       }
-    } else {
-      // Regular move
-      sounds.move.play();
     }
   });
 }

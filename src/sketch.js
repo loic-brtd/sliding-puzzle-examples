@@ -10,17 +10,13 @@ function preload() {
   assets = {
     sounds: {
       // ambiant: new CustomSound("src/audio/puzzle_theme.mp3"),
-      move: new CustomSound("src/audio/move3.wav"),
-      suspens: new CustomSound("src/audio/suspens.wav"),
+      move: new CustomSound("src/audio/move1.wav"),
+      // suspens: new CustomSound("src/audio/suspens.wav"),
       success: new CustomSound("src/audio/success.wav"),
       inPlace: new CustomSound("src/audio/in_place.wav"),
       reset: new CustomSound("src/audio/reset.wav"),
     },
-    fonts: {
-      // mono: loadFont("src/fonts/goodbyeDespair.ttf"),
-      // mono: loadFont("fonts/prof-layton.ttf"),
-    },
-  };
+  }
 
   const params = new URLSearchParams(window.location.search)
   if (params.get('puzzle') in puzzles) {
@@ -58,5 +54,5 @@ function init() {
   renderer.onMouseDragged((x, y) => puzzle.board.mouseDragged(x, y));
   renderer.onMouseReleased(() => puzzle.board.mouseReleased());
   puzzle.board.on('animation', block => renderer.render(block));
-  puzzle.setup({ musicOff: true });
+  puzzle.setup();
 }
