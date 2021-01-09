@@ -11,8 +11,20 @@
   </head>
 
   <body>
-    <div id="canvas-container">
+    <div id="container">
       <div class="loader"></div>
+      <div class="background">
+        <!-- Moves count box -->
+        <svg viewBox="0 0 42 16" id="moves_box">
+          <rect x="1" y="1" width="40" height="14" />
+          <text x="40" y="13" id="moves">0</text>
+        </svg>
+        <!-- Reset button -->
+        <svg viewBox="0 0 72 18" id="reset" class="button">
+          <rect x="2" y="2" width="68" height="14" />
+          <text x="36" y="13">Reset</text>
+        </svg>
+      </div>
     </div>
 
     <script src="lib/sliding-puzzle.js"></script>

@@ -14,6 +14,7 @@ function preload() {
       suspens: new CustomSound("src/audio/suspens.wav"),
       success: new CustomSound("src/audio/success.wav"),
       inPlace: new CustomSound("src/audio/in_place.wav"),
+      reset: new CustomSound("src/audio/reset.wav"),
     },
     fonts: {
       // mono: loadFont("src/fonts/goodbyeDespair.ttf"),
@@ -25,8 +26,8 @@ function preload() {
   if (params.get('puzzle') in puzzles) {
     puzzle = puzzles[params.get('puzzle')]({ assets });
   } else {
-    document.querySelector('.loader').remove();
-    createDiv(listPuzzles()).parent('#canvas-container')
+    document.querySelector('#container').innerHTML = '';
+    createDiv(listPuzzles()).parent('#container')
   }
 }
 
@@ -44,9 +45,9 @@ function init() {
 
   document.querySelector('.loader').remove();
 
-  const container = document.querySelector("#canvas-container");
+  const container = document.querySelector("#container");
 
-  renderer = new SlidingPuzzle.HTMLRenderer ({
+  renderer = new SlidingPuzzle.HTMLRenderer({
     parentElement: container,
     board: puzzle.board,
     proportions: puzzle.proportions,

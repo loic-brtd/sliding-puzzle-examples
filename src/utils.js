@@ -56,8 +56,24 @@ function sharedPuzzleSetup({ context, board, winningPlace }) {
   let moves = 0;
   let movedOnce = false;
 
+  const movesElement = document.querySelector("#moves");
+  movesElement.innerHTML = moves;
+
+  const resetButton = document.querySelector('#reset');
+  resetButton.addEventListener('click', () => {
+    board.restorePositions();
+    moves = 0;
+    wonTheGame = false;
+    renderer.render();
+    movesElement.innerHTML = moves;
+    sounds.reset.play();
+  });
+
   board.savePositions();
-  board.on("continuousMove", () => moves++);
+  board.on("continuousMove", () => {
+    moves++
+    movesElement.innerHTML = moves;
+  });
   board.on("move", (block) => {
 
     // First move

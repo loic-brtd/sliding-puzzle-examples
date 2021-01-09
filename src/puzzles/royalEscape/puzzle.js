@@ -7,7 +7,7 @@ puzzles.royalEscape = (context) => {
     green: makeImage(dir + "green.jpg"),
     red: makeImage(dir + "red.jpg"),
     purple: makeImage(dir + "purple.jpg"),
-    board: makeImage(dir + "board2.jpg"),
+    board: makeImage(dir + "board3.jpg"),
   };
 
   const blueSettings = {
@@ -100,10 +100,14 @@ puzzles.royalEscape = (context) => {
   return new Puzzle({
     background: images.board,
     proportions: {
-      x: 1 / 9,
-      y: 1 / 6,
-      width: 8 / 9,
-      height: 4 / 6,
+      // x: 1 / 9,
+      // y: 1 / 6,
+      // width: 8 / 9,
+      // height: 4 / 6,
+      x: 16 / 256,
+      y: 48 / 192,
+      width: 256 / 256,
+      height: 128 / 192,
     },
     board,
     onSetup: () => {
