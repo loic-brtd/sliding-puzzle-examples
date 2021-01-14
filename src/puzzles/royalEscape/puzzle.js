@@ -45,7 +45,7 @@ puzzles.royalEscape = (context) => {
     ],
     image: images.red,
     possibleOverlaps: [finishBlock],
-    tag: "red",
+    name: "red",
   });
 
   const blocks = [
@@ -101,7 +101,7 @@ puzzles.royalEscape = (context) => {
     },
     board,
     onSetup: () => {
-      const winningPlace = (block) => block.tag === 'red' && block.x === 6;
+      const winningPlace = (block) => block.name === 'red' && block.x === 6;
       sharedPuzzleSetup({ context, board, winningPlace });
     }
   });

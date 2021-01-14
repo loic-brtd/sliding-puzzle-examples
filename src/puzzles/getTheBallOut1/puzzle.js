@@ -46,7 +46,7 @@ puzzles.getTheBallOut1 = (context) => {
     y: 0,
     shape: [[1]],
     image: images.ball,
-    tag: "ball",
+    name: "ball",
   });
 
   const blocks = [
@@ -97,7 +97,7 @@ puzzles.getTheBallOut1 = (context) => {
     },
     board,
     onSetup: () => {
-      const winningPlace = (block) => block.tag === 'ball'
+      const winningPlace = (block) => block.name === 'ball'
         && block.x === 2 && block.y === 5;
       sharedPuzzleSetup({ context, board, winningPlace });
     }

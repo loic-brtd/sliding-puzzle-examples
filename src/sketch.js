@@ -44,7 +44,7 @@ function init() {
   const container = document.querySelector("#container");
 
   renderer = new SlidingPuzzle.HTMLRenderer({
-    parentElement: container,
+    container: container,
     board: puzzle.board,
     proportions: puzzle.proportions,
     backgroundImage: puzzle.background,

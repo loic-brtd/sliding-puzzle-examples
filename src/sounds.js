@@ -1,7 +1,11 @@
 class CustomSound {
+
+  static globalVolume = 0.1;
+  
   constructor(path) {
     this.path = path;
     this.audio = new Audio(path);
+    this.audio.volume = CustomSound.globalVolume;
   }
 
   play() {
@@ -26,6 +30,7 @@ class CustomSound {
   }
 
   fade(target) {
+    target *= CustomSound.globalVolume;
     if (abs(this.audio.volume - target) < 0.05) {
       this.audio.volume = target;
     } else {
@@ -39,6 +44,7 @@ class CustomSound {
   }
 
   volume(value) {
+    value *= CustomSound.globalVolume;
     if (value !== undefined) {
       this.audio.volume = value;
     } else {
