@@ -1316,7 +1316,7 @@ function main() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    audioPath = "../src/audio/";
+                    audioPath = window.location.origin + "/src/audio/";
                     assets = {
                         sounds: {
                             // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
@@ -1367,8 +1367,8 @@ function main() {
 document.addEventListener("DOMContentLoaded", main);
 
 var makePuzzle = function () {
-    var gtbo1 = "../src/puzzles/getTheBallOut1/images/";
-    var gtbo4 = "../src/puzzles/getTheBallOut4/images/";
+    var gtbo1 = window.location.origin + "/src/puzzles/getTheBallOut1/images/";
+    var gtbo4 = window.location.origin + "/src/puzzles/getTheBallOut4/images/";
     var images = {
         blue: makeImage(gtbo4 + "blue.jpg"),
         green: makeImage(gtbo4 + "green.jpg"),
@@ -1464,7 +1464,7 @@ var puzzle = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$1 = function () {
-    var path = "../src/puzzles/getTheBallOut4/images/";
+    var path = window.location.origin + "/src/puzzles/getTheBallOut4/images/";
     var images = {
         blue: makeImage(path + "blue.jpg"),
         green: makeImage(path + "green.jpg"),
@@ -1560,7 +1560,7 @@ var puzzle$1 = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$2 = function () {
-    var dir = "../src/puzzles/royalEscape/images/";
+    var dir = window.location.origin + "/src/puzzles/royalEscape/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
         green: makeImage(dir + "green.jpg"),
