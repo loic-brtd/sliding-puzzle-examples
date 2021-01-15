@@ -1330,13 +1330,13 @@ function main() {
                     _a = {};
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle; })];
                 case 1:
-                    _a.getTheBallOut1 = _b.sent();
+                    _a.get_the_ball_out_1 = _b.sent();
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$1; })];
                 case 2:
-                    _a.getTheBallOut4 = _b.sent();
+                    _a.get_the_ball_out_4 = _b.sent();
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$2; })];
                 case 3:
-                    puzzles = (_a.royalEscape = _b.sent(),
+                    puzzles = (_a.royal_escape = _b.sent(),
                         _a);
                     params = new URLSearchParams(window.location.search);
                     puzzleName = params.get("puzzle");
@@ -1367,8 +1367,8 @@ function main() {
 document.addEventListener("DOMContentLoaded", main);
 
 var makePuzzle = function () {
-    var gtbo1 = window.location.origin + "/src/puzzles/getTheBallOut1/images/";
-    var gtbo4 = window.location.origin + "/src/puzzles/getTheBallOut4/images/";
+    var gtbo1 = window.location.origin + "/src/puzzles/get_the_ball_out_1/images/";
+    var gtbo4 = window.location.origin + "/src/puzzles/get_the_ball_out_4/images/";
     var images = {
         blue: makeImage(gtbo4 + "blue.jpg"),
         green: makeImage(gtbo4 + "green.jpg"),
@@ -1464,7 +1464,7 @@ var puzzle = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$1 = function () {
-    var path = window.location.origin + "/src/puzzles/getTheBallOut4/images/";
+    var path = window.location.origin + "/src/puzzles/get_the_ball_out_4/images/";
     var images = {
         blue: makeImage(path + "blue.jpg"),
         green: makeImage(path + "green.jpg"),
@@ -1560,7 +1560,7 @@ var puzzle$1 = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$2 = function () {
-    var dir = window.location.origin + "/src/puzzles/royalEscape/images/";
+    var dir = window.location.origin + "/src/puzzles/royal_escape/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
         green: makeImage(dir + "green.jpg"),

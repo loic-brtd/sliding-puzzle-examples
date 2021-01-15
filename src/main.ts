@@ -16,9 +16,9 @@ async function main() {
   };
 
   const puzzles = {
-    getTheBallOut1: await import("./puzzles/getTheBallOut1/puzzle"),
-    getTheBallOut4: await import("./puzzles/getTheBallOut4/puzzle"),
-    royalEscape: await import("./puzzles/royalEscape/puzzle"),
+    get_the_ball_out_1: await import("./puzzles/get_the_ball_out_1/puzzle"),
+    get_the_ball_out_4: await import("./puzzles/get_the_ball_out_4/puzzle"),
+    royal_escape: await import("./puzzles/royal_escape/puzzle"),
   };
 
   // const puzzles = ["getTheBallOut1", "getTheBallOut4", "royalEscape"];
