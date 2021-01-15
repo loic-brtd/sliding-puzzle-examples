@@ -27,19 +27,17 @@ export function onImageLoad(image, callback) {
   }
 }
 
-export function listPuzzles(puzzles) {
-  const style =
-    "color: white; font-size: 20px; text-align: center; line-height: 2;";
-  const url = location.protocol + "//" + location.host + location.pathname;
-  let links =
-    "<ul>" +
-    Object.keys(puzzles)
-      .map((name) => [url + "?puzzle=" + name, name])
-      .map(
-        ([link, name]) =>
-          `<li><a href="${link}" style="${style}">${name}</a></li>`
-      )
-      .join("") +
-    "</ul>";
-  return links;
+export function makePuzzleList(puzzles) {
+  const baseUrl = location.protocol + "//" + location.host + location.pathname;
+  let html_links = '<ul class="puzzle-list">';
+
+  for (let [puzzleName, puzzleFactory] of Object.entries(puzzles)) {
+    const puzzle = (puzzleFactory as any).makePuzzle();
+    const href = baseUrl + "?puzzle=" + puzzleName;
+    const title = puzzle.title;
+    html_links += `<li><a href="${href}">${title}</a></li>`;
+  }
+
+  html_links += "</ul>";
+  return html_links;
 }

@@ -1,4 +1,4 @@
-import { listPuzzles, onImageLoad } from "./utils";
+import { makePuzzleList, onImageLoad } from "./utils";
 import { HTMLRenderer, Block, Board } from "../lib/sliding-puzzle-esm";
 import { CustomSound } from "./sounds";
 
@@ -43,9 +43,7 @@ async function main() {
       });
     }
   } else {
-    document.querySelector("#container").innerHTML = `<div>${listPuzzles(
-      puzzles
-    )}</div>`;
+    document.querySelector("#container").innerHTML = makePuzzleList(puzzles);
   }
 
   function setupRenderer(puzzle) {
