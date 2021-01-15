@@ -3,7 +3,7 @@ import { makeImage } from "../../utils";
 
 export const makePuzzle = () => {
   const path =
-    window.location.origin + "/src/puzzles/get_the_ball_out_4/images/";
+    window.location.origin + "src/puzzles/get_the_ball_out_4/images/";
   const images = {
     blue: makeImage(path + "blue.jpg"),
     green: makeImage(path + "green.jpg"),

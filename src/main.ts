@@ -3,7 +3,7 @@ import { HTMLRenderer, Block, Board } from "../lib/sliding-puzzle-esm";
 import { CustomSound } from "./sounds";
 
 async function main() {
-  const audioPath = window.location.origin + "/src/audio/";
+  const audioPath = "src/audio/";
   const assets = {
     sounds: {
       // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
