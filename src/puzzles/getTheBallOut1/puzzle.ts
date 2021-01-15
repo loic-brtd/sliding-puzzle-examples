@@ -1,15 +1,16 @@
-var puzzles = puzzles || {};
+import { Block, Board } from "../../../lib/sliding-puzzle-esm";
+import { makeImage } from "../../utils";
 
-puzzles.getTheBallOut1 = (context) => {
-  const path = 'src/puzzles/getTheBallOut1/images/'
-  const gtbo4 = 'src/puzzles/getTheBallOut4/images/'
+export const makePuzzle = () => {
+  const gtbo1 = "../src/puzzles/getTheBallOut1/images/";
+  const gtbo4 = "../src/puzzles/getTheBallOut4/images/";
   const images = {
-    blue: makeImage(gtbo4 + 'blue.jpg'),
-    green: makeImage(gtbo4 + 'green.jpg'),
-    ball: makeImage(gtbo4 + 'ball.png'),
-    yellow: makeImage(gtbo4 + 'yellow.jpg'),
-    purple: makeImage(gtbo4 + 'purple.jpg'),
-    board: makeImage(path + 'board.jpg'),
+    blue: makeImage(gtbo4 + "blue.jpg"),
+    green: makeImage(gtbo4 + "green.jpg"),
+    ball: makeImage(gtbo4 + "ball.png"),
+    yellow: makeImage(gtbo4 + "yellow.jpg"),
+    purple: makeImage(gtbo4 + "purple.jpg"),
+    board: makeImage(gtbo1 + "board.jpg"),
   };
 
   const blueSettings = {
@@ -28,12 +29,15 @@ puzzles.getTheBallOut1 = (context) => {
   };
 
   const yellowSettings = {
-    shape: [[1, 1], [1, 1]],
+    shape: [
+      [1, 1],
+      [1, 1],
+    ],
     image: images.yellow,
   };
 
   function makeBlock(x, y, settings) {
-    return new SlidingPuzzle.Block({
+    return new Block({
       x: x,
       y: y,
       shape: settings.shape,
@@ -41,7 +45,7 @@ puzzles.getTheBallOut1 = (context) => {
     });
   }
 
-  const ball = new SlidingPuzzle.Block({
+  const ball = new Block({
     x: 2,
     y: 0,
     shape: [[1]],
@@ -62,7 +66,7 @@ puzzles.getTheBallOut1 = (context) => {
     makeBlock(4, 4, purpleSettings),
   ];
 
-  const boundaries = new SlidingPuzzle.Block({
+  const boundaries = new Block({
     x: -1,
     y: -1,
     shape: [
@@ -78,7 +82,7 @@ puzzles.getTheBallOut1 = (context) => {
     selectable: false,
   });
 
-  const board = new SlidingPuzzle.Board({
+  const board = new Board({
     cols: 5,
     rows: 6,
   });
@@ -87,7 +91,8 @@ puzzles.getTheBallOut1 = (context) => {
   board.addBlock(ball);
   blocks.forEach((b) => board.addBlock(b));
 
-  return new Puzzle({
+  return {
+    title: "Get the Ball Out! 1",
     background: images.board,
     proportions: {
       x: 64 / 256,
@@ -96,10 +101,7 @@ puzzles.getTheBallOut1 = (context) => {
       height: 144 / 192,
     },
     board,
-    onSetup: () => {
-      const winningPlace = (block) => block.name === 'ball'
-        && block.x === 2 && block.y === 5;
-      sharedPuzzleSetup({ context, board, winningPlace });
-    }
-  });
+    winningPlace: (block: Block) =>
+      block.name === "ball" && block.x === 2 && block.y === 5,
+  };
 };

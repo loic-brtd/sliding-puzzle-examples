@@ -1,7 +1,8 @@
-var puzzles = puzzles || {};
+import { Block, Board } from "../../../lib/sliding-puzzle-esm";
+import { makeImage } from "../../utils";
 
-puzzles.royalEscape = (context) => {
-  const dir = "src/puzzles/royalEscape/images/";
+export const makePuzzle = () => {
+  const dir = "../src/puzzles/royalEscape/images/";
   const images = {
     blue: makeImage(dir + "blue.jpg"),
     green: makeImage(dir + "green.jpg"),
@@ -21,7 +22,7 @@ puzzles.royalEscape = (context) => {
   };
 
   function makeBlock(x, y, settings) {
-    return new SlidingPuzzle.Block({
+    return new Block({
       x: x,
       y: y,
       shape: settings.shape,
@@ -29,14 +30,14 @@ puzzles.royalEscape = (context) => {
     });
   }
 
-  const finishBlock = new SlidingPuzzle.Block({
+  const finishBlock = new Block({
     x: 5,
     y: 1,
     shape: [[1], [1]],
     selectable: false,
   });
 
-  const redBlock = new SlidingPuzzle.Block({
+  const redBlock = new Block({
     x: 0,
     y: 1,
     shape: [
@@ -59,7 +60,7 @@ puzzles.royalEscape = (context) => {
     makeBlock(3, 2, greenSettings),
     makeBlock(4, 3, greenSettings),
 
-    new SlidingPuzzle.Block({
+    new Block({
       x: 2,
       y: 1,
       shape: [[1], [1]],
@@ -67,7 +68,7 @@ puzzles.royalEscape = (context) => {
     }),
   ];
 
-  const boundaries = new SlidingPuzzle.Block({
+  const boundaries = new Block({
     x: -1,
     y: -1,
     shape: [
@@ -81,7 +82,7 @@ puzzles.royalEscape = (context) => {
     selectable: false,
   });
 
-  const board = new SlidingPuzzle.Board({
+  const board = new Board({
     cols: 8,
     rows: 4,
   });
@@ -91,7 +92,8 @@ puzzles.royalEscape = (context) => {
   board.addBlock(redBlock);
   blocks.forEach((b) => board.addBlock(b));
 
-  return new Puzzle({
+  return {
+    title: "Royal Escape",
     background: images.board,
     proportions: {
       x: 16 / 256,
@@ -100,9 +102,6 @@ puzzles.royalEscape = (context) => {
       height: 128 / 192,
     },
     board,
-    onSetup: () => {
-      const winningPlace = (block) => block.name === 'red' && block.x === 6;
-      sharedPuzzleSetup({ context, board, winningPlace });
-    }
-  });
+    winningPlace: (block: Block) => block.name === "red" && block.x === 6,
+  };
 };

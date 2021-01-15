@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    // Build settings
+    // "declaration": true,
+    "target": "es5",
+    "outDir": "dist",
+    "module": "ESNext",
+    // Language settings
+    "moduleResolution": "node",
+    // "noImplicitAny": true,
+    "downlevelIteration": true,
+    "lib": ["es7", "es6", "dom"]
+  },
+  "include": ["src", "lib"],
+  "exclude": ["node_modules", "dist"]
+}

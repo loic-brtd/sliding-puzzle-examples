@@ -78,7 +78,7 @@ svg.button text {
   /* text outline */
   paint-order: stroke;
   stroke: #1a1a1a;
-  stroke-width: 3.0%;
+  stroke-width: 3%;
   stroke-linecap: butt;
   stroke-linejoin: miter;
   font-weight: 800;
@@ -91,6 +91,10 @@ svg#reset rect {
 .board {
   user-select: none;
 }
+
+/* .block {
+  transition: all 0.05s linear;
+} */
 
 .loader {
   position: absolute;
