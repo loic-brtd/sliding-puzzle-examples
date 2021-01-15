@@ -2,7 +2,7 @@ import { Block, Board } from "../../../lib/sliding-puzzle-esm";
 import { makeImage } from "../../utils";
 
 export const makePuzzle = () => {
-  const path = "../../src/puzzles/get_the_ball_out_4/images/";
+  const path = "../../../src/puzzles/get_the_ball_out_4/images/";
   const images = {
     blue: makeImage(path + "blue.jpg"),
     green: makeImage(path + "green.jpg"),
