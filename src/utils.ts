@@ -1,3 +1,7 @@
+export const rootPath = document.URL.includes("github")
+  ? "https://lobertrand.github.io/sliding-puzzle-examples/"
+  : "";
+
 export function makeImage(url) {
   const image = new Image();
   image.src = url;
