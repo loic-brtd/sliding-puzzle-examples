@@ -4,13 +4,11 @@ import { CustomSound } from "./sounds";
 
 async function main() {
   const audioPath = rootPath + "src/audio/";
-  console.log({ rootPath, audioPath });
-
   const assets = {
     sounds: {
       // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
-      move: new CustomSound(audioPath + "move1.wav"),
       // suspens: new CustomSound(audioPath + "suspens.wav"),
+      move: new CustomSound(audioPath + "move1.wav"),
       success: new CustomSound(audioPath + "success.wav"),
       inPlace: new CustomSound(audioPath + "in_place.wav"),
       reset: new CustomSound(audioPath + "reset.wav"),
@@ -18,19 +16,16 @@ async function main() {
   };
 
   const puzzles = {
-    get_the_ball_out_1: await import("./puzzles/get_the_ball_out_1/puzzle"),
-    get_the_ball_out_4: await import("./puzzles/get_the_ball_out_4/puzzle"),
-    royal_escape: await import("./puzzles/royal_escape/puzzle"),
+    CV058: await import("./puzzles/CV058/puzzle"),
+    CV094: await import("./puzzles/CV094/puzzle"),
+    CV097: await import("./puzzles/CV097/puzzle"),
+    CV135: await import("./puzzles/CV135/puzzle"),
   };
-
-  // const puzzles = ["getTheBallOut1", "getTheBallOut4", "royalEscape"];
 
   const params = new URLSearchParams(window.location.search);
   const puzzleName = params.get("puzzle");
-  // if (puzzles.includes(puzzleName)) {
+
   if (puzzleName in puzzles) {
-    // const puzzlePath = `./puzzles/${puzzleName}/puzzle`;
-    // const puzzleFactory = await import(puzzlePath);
     const puzzleFactory = puzzles[puzzleName];
     const puzzle = puzzleFactory.makePuzzle();
     if (puzzle && puzzle.background) {
@@ -84,6 +79,11 @@ async function main() {
     let wonTheGame = false;
     let moves = 0;
     let userInteracted = false;
+
+    const quitButton = document.querySelector("#quit");
+    const quit = () => (window.location.href = rootPath + "?puzzle=home");
+    quitButton.addEventListener("click", quit);
+    quitButton.addEventListener("touchstart", quit);
 
     const movesElement = document.querySelector("#moves");
     movesElement.innerHTML = moves.toString();

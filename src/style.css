@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@500&display=swap");
+@font-face {
+  font-family: "GoodbyeDespair";
+  src: url("./fonts/goodbyeDespair.ttf");
+}
+
 html,
 body {
   margin: 0;
@@ -12,6 +18,10 @@ body {
   height: 100%;
 }
 
+.board {
+  user-select: none;
+}
+
 .block {
   user-select: none;
 }
@@ -20,14 +30,13 @@ body {
   cursor: grab;
 }
 
+.block.selectable:active {
+  cursor: grabbing;
+}
+
 .background {
   user-select: none;
   overflow: hidden;
-}
-
-@font-face {
-  font-family: "GoodbyeDespair";
-  src: url("./fonts/goodbyeDespair.ttf");
 }
 
 svg#moves_box {
@@ -55,8 +64,6 @@ svg.button {
   z-index: 1;
   position: absolute;
   display: block;
-  left: 2.3%;
-  top: 3.1%;
   width: 28%;
   background-color: #1a1a1a;
   cursor: pointer;
@@ -67,7 +74,6 @@ svg.button text {
   text-anchor: middle;
   fill: white;
   font-size: 80%;
-  /* text outline */
   paint-order: stroke;
   stroke: #1a1a1a;
   stroke-width: 3%;
@@ -80,8 +86,18 @@ svg#reset rect {
   fill: #05828b;
 }
 
-.board {
-  user-select: none;
+svg#reset {
+  left: 2.3%;
+  top: 3.1%;
+}
+
+svg#quit rect {
+  fill: #05828b;
+}
+
+svg#quit {
+  right: 2.3%;
+  top: 3.1%;
 }
 
 .loader {
@@ -114,35 +130,16 @@ svg#reset rect {
 }
 
 .puzzle-list a {
-  display: inline-block;
   position: relative;
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
+  display: inline-block;
   padding: 12px;
-  font-family: "GoodbyeDespair";
+  color: white;
+  font-size: 28px;
+  font-family: "Fraunces", serif;
+  text-decoration: none;
+  transition: transform 0.1s;
 }
 
-.puzzle-list a::before {
-  content: ">";
-  position: absolute;
-  left: 0;
-  transform: translateX(-50px);
-  transition: all 0.2s;
-}
-
-.puzzle-list a::after {
-  content: "<";
-  position: absolute;
-  right: 0;
-  transform: translateX(50px);
-  transition: all 0.2s;
-}
-
-.puzzle-list a:hover::before {
-  transform: translateX(-30px);
-}
-
-.puzzle-list a:hover::after {
-  transform: translateX(30px);
+.puzzle-list a:hover {
+  transform: scale(1.1);
 }

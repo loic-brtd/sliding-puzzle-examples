@@ -98,14 +98,13 @@ function onImageLoad(image, callback) {
 }
 function makePuzzleList(puzzles) {
     var e_1, _a;
-    var baseUrl = location.protocol + "//" + location.host + location.pathname;
     var html_links = '<ul class="puzzle-list">';
     try {
         for (var _b = __values(Object.entries(puzzles)), _c = _b.next(); !_c.done; _c = _b.next()) {
-            var _d = __read(_c.value, 2), puzzleName = _d[0], puzzleFactory = _d[1];
+            var _d = __read(_c.value, 2), puzzleRef = _d[0], puzzleFactory = _d[1];
             var puzzle = puzzleFactory.makePuzzle();
-            var href = baseUrl + "?puzzle=" + puzzleName;
-            var title = puzzle.title;
+            var href = rootPath + "?puzzle=" + puzzleRef;
+            var title = "[" + puzzleRef + "] " + puzzle.title;
             html_links += "<li><a href=\"" + href + "\">" + title + "</a></li>";
         }
     }
@@ -1273,6 +1272,10 @@ function main() {
             var sounds = _a.sounds, board = _a.board, winningPlace = _a.winningPlace, renderer = _a.renderer;
             var wonTheGame = false;
             var moves = 0;
+            var quitButton = document.querySelector("#quit");
+            var quit = function () { return (window.location.href = rootPath + "?puzzle=home"); };
+            quitButton.addEventListener("click", quit);
+            quitButton.addEventListener("touchstart", quit);
             var movesElement = document.querySelector("#moves");
             movesElement.innerHTML = moves.toString();
             var resetButton = document.querySelector("#reset");
@@ -1320,12 +1323,11 @@ function main() {
             switch (_b.label) {
                 case 0:
                     audioPath = rootPath + "src/audio/";
-                    console.log({ rootPath: rootPath, audioPath: audioPath });
                     assets = {
                         sounds: {
                             // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
-                            move: new CustomSound(audioPath + "move1.wav"),
                             // suspens: new CustomSound(audioPath + "suspens.wav"),
+                            move: new CustomSound(audioPath + "move1.wav"),
                             success: new CustomSound(audioPath + "success.wav"),
                             inPlace: new CustomSound(audioPath + "in_place.wav"),
                             reset: new CustomSound(audioPath + "reset.wav"),
@@ -1334,17 +1336,19 @@ function main() {
                     _a = {};
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle; })];
                 case 1:
-                    _a.get_the_ball_out_1 = _b.sent();
+                    _a.CV058 = _b.sent();
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$1; })];
                 case 2:
-                    _a.get_the_ball_out_4 = _b.sent();
+                    _a.CV094 = _b.sent();
                     return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$2; })];
                 case 3:
-                    puzzles = (_a.royal_escape = _b.sent(),
+                    _a.CV097 = _b.sent();
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$3; })];
+                case 4:
+                    puzzles = (_a.CV135 = _b.sent(),
                         _a);
                     params = new URLSearchParams(window.location.search);
                     puzzleName = params.get("puzzle");
-                    // if (puzzles.includes(puzzleName)) {
                     if (puzzleName in puzzles) {
                         puzzleFactory = puzzles[puzzleName];
                         puzzle_1 = puzzleFactory.makePuzzle();
@@ -1370,9 +1374,10 @@ function main() {
 }
 document.addEventListener("DOMContentLoaded", main);
 
+// [CV058] Get the Ball Out! 1
 var makePuzzle = function () {
-    var gtbo1 = rootPath + "src/puzzles/get_the_ball_out_1/images/";
-    var gtbo4 = rootPath + "src/puzzles/get_the_ball_out_4/images/";
+    var gtbo1 = rootPath + "src/puzzles/CV058/images/";
+    var gtbo4 = rootPath + "src/puzzles/CV094/images/";
     var images = {
         blue: makeImage(gtbo4 + "blue.jpg"),
         green: makeImage(gtbo4 + "green.jpg"),
@@ -1467,8 +1472,9 @@ var puzzle = /*#__PURE__*/Object.freeze({
     makePuzzle: makePuzzle
 });
 
+// [CV094] Get the Ball Out! 4
 var makePuzzle$1 = function () {
-    var path = rootPath + "src/puzzles/get_the_ball_out_4/images/";
+    var path = rootPath + "src/puzzles/CV094/images/";
     var images = {
         blue: makeImage(path + "blue.jpg"),
         green: makeImage(path + "green.jpg"),
@@ -1563,8 +1569,110 @@ var puzzle$1 = /*#__PURE__*/Object.freeze({
     makePuzzle: makePuzzle$1
 });
 
+// [CV097] Maiden's Escape
 var makePuzzle$2 = function () {
-    var dir = rootPath + "src/puzzles/royal_escape/images/";
+    var dir = rootPath + "src/puzzles/CV135/images/";
+    var images = {
+        blue: makeImage(dir + "blue.jpg"),
+        green: makeImage(dir + "green.jpg"),
+        red: makeImage(dir + "red.jpg"),
+        purple: makeImage(dir + "purple.jpg"),
+        board: makeImage(dir + "board3.jpg"),
+    };
+    var blueSettings = {
+        shape: [[1, 1]],
+        image: images.blue,
+    };
+    var greenSettings = {
+        shape: [[1]],
+        image: images.green,
+    };
+    function makeBlock(x, y, settings) {
+        return new Block({
+            x: x,
+            y: y,
+            shape: settings.shape,
+            image: settings.image,
+        });
+    }
+    var finishBlock = new Block({
+        x: 5,
+        y: 1,
+        shape: [[1], [1]],
+        selectable: false,
+    });
+    var redBlock = new Block({
+        x: 0,
+        y: 1,
+        shape: [
+            [1, 1],
+            [1, 1],
+        ],
+        image: images.red,
+        possibleOverlaps: [finishBlock],
+        name: "red",
+    });
+    var blocks = [
+        makeBlock(0, 0, blueSettings),
+        makeBlock(0, 3, blueSettings),
+        makeBlock(2, 0, greenSettings),
+        makeBlock(2, 3, greenSettings),
+        makeBlock(3, 0, greenSettings),
+        makeBlock(3, 1, greenSettings),
+        makeBlock(3, 2, greenSettings),
+        makeBlock(3, 3, greenSettings),
+        makeBlock(4, 0, greenSettings),
+        makeBlock(4, 3, greenSettings),
+        new Block({
+            x: 2,
+            y: 1,
+            shape: [[1], [1]],
+            image: images.purple,
+        }),
+    ];
+    var boundaries = new Block({
+        x: -1,
+        y: -1,
+        shape: [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ],
+        selectable: false,
+    });
+    var board = new Board({
+        cols: 8,
+        rows: 4,
+    });
+    board.addBlock(boundaries);
+    board.addBlock(finishBlock);
+    board.addBlock(redBlock);
+    blocks.forEach(function (b) { return board.addBlock(b); });
+    return {
+        title: "Maiden's Escape",
+        background: images.board,
+        proportions: {
+            x: 16 / 256,
+            y: 48 / 192,
+            width: 256 / 256,
+            height: 128 / 192,
+        },
+        board: board,
+        winningPlace: function (block) { return block.name === "red" && block.x === 6; },
+    };
+};
+
+var puzzle$2 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    makePuzzle: makePuzzle$2
+});
+
+// [CV135] Royal Escape
+var makePuzzle$3 = function () {
+    var dir = rootPath + "src/puzzles/CV135/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
         green: makeImage(dir + "green.jpg"),
@@ -1656,7 +1764,7 @@ var makePuzzle$2 = function () {
     };
 };
 
-var puzzle$2 = /*#__PURE__*/Object.freeze({
+var puzzle$3 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    makePuzzle: makePuzzle$2
+    makePuzzle: makePuzzle$3
 });

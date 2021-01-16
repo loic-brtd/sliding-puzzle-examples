@@ -1,9 +1,10 @@
 import { Block, Board } from "../../../lib/sliding-puzzle-esm";
 import { makeImage, rootPath } from "../../utils";
 
+// [CV058] Get the Ball Out! 1
 export const makePuzzle = () => {
-  const gtbo1 = rootPath + "src/puzzles/get_the_ball_out_1/images/";
-  const gtbo4 = rootPath + "src/puzzles/get_the_ball_out_4/images/";
+  const gtbo1 = rootPath + "src/puzzles/CV058/images/";
+  const gtbo4 = rootPath + "src/puzzles/CV094/images/";
   const images = {
     blue: makeImage(gtbo4 + "blue.jpg"),
     green: makeImage(gtbo4 + "green.jpg"),

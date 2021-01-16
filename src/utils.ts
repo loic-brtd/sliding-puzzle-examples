@@ -32,13 +32,12 @@ export function onImageLoad(image, callback) {
 }
 
 export function makePuzzleList(puzzles) {
-  const baseUrl = location.protocol + "//" + location.host + location.pathname;
   let html_links = '<ul class="puzzle-list">';
 
-  for (let [puzzleName, puzzleFactory] of Object.entries(puzzles)) {
+  for (let [puzzleRef, puzzleFactory] of Object.entries(puzzles)) {
     const puzzle = (puzzleFactory as any).makePuzzle();
-    const href = baseUrl + "?puzzle=" + puzzleName;
-    const title = puzzle.title;
+    const href = rootPath + "?puzzle=" + puzzleRef;
+    const title = `[${puzzleRef}] ${puzzle.title}`;
     html_links += `<li><a href="${href}">${title}</a></li>`;
   }
 

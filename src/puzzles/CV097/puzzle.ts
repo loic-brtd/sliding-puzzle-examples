@@ -1,8 +1,9 @@
 import { Block, Board } from "../../../lib/sliding-puzzle-esm";
 import { makeImage, rootPath } from "../../utils";
 
+// [CV097] Maiden's Escape
 export const makePuzzle = () => {
-  const dir = rootPath + "src/puzzles/royal_escape/images/";
+  const dir = rootPath + "src/puzzles/CV135/images/";
   const images = {
     blue: makeImage(dir + "blue.jpg"),
     green: makeImage(dir + "green.jpg"),
@@ -51,13 +52,15 @@ export const makePuzzle = () => {
 
   const blocks = [
     makeBlock(0, 0, blueSettings),
-    makeBlock(2, 0, blueSettings),
     makeBlock(0, 3, blueSettings),
-    makeBlock(2, 3, blueSettings),
 
-    makeBlock(4, 0, greenSettings),
+    makeBlock(2, 0, greenSettings),
+    makeBlock(2, 3, greenSettings),
+    makeBlock(3, 0, greenSettings),
     makeBlock(3, 1, greenSettings),
     makeBlock(3, 2, greenSettings),
+    makeBlock(3, 3, greenSettings),
+    makeBlock(4, 0, greenSettings),
     makeBlock(4, 3, greenSettings),
 
     new Block({
@@ -93,7 +96,7 @@ export const makePuzzle = () => {
   blocks.forEach((b) => board.addBlock(b));
 
   return {
-    title: "Royal Escape",
+    title: "Maiden's Escape",
     background: images.board,
     proportions: {
       x: 16 / 256,
