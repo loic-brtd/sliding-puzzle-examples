@@ -2,7 +2,7 @@ import { Block, Board } from "../../../lib/sliding-puzzle-esm";
 import { makeImage } from "../../utils";
 
 export const makePuzzle = () => {
-  const dir = "../../../src/puzzles/royal_escape/images/";
+  const dir = "src/puzzles/royal_escape/images/";
   const images = {
     blue: makeImage(dir + "blue.jpg"),
     green: makeImage(dir + "green.jpg"),
