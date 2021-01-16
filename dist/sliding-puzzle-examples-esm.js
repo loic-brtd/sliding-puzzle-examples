@@ -80,6 +80,9 @@ function __read(o, n) {
     return ar;
 }
 
+var rootPath = document.URL.includes("github")
+    ? "https://lobertrand.github.io/sliding-puzzle-examples/"
+    : "";
 function makeImage(url) {
     var image = new Image();
     image.src = url;
@@ -1316,7 +1319,8 @@ function main() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    audioPath = "./src/audio/";
+                    audioPath = rootPath + "src/audio/";
+                    console.log({ rootPath: rootPath, audioPath: audioPath });
                     assets = {
                         sounds: {
                             // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
@@ -1367,8 +1371,8 @@ function main() {
 document.addEventListener("DOMContentLoaded", main);
 
 var makePuzzle = function () {
-    var gtbo1 = "../../src/puzzles/get_the_ball_out_1/images/";
-    var gtbo4 = "../../src/puzzles/get_the_ball_out_4/images/";
+    var gtbo1 = rootPath + "src/puzzles/get_the_ball_out_1/images/";
+    var gtbo4 = rootPath + "src/puzzles/get_the_ball_out_4/images/";
     var images = {
         blue: makeImage(gtbo4 + "blue.jpg"),
         green: makeImage(gtbo4 + "green.jpg"),
@@ -1464,7 +1468,7 @@ var puzzle = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$1 = function () {
-    var path = "../../src/puzzles/get_the_ball_out_4/images/";
+    var path = rootPath + "src/puzzles/get_the_ball_out_4/images/";
     var images = {
         blue: makeImage(path + "blue.jpg"),
         green: makeImage(path + "green.jpg"),
@@ -1560,7 +1564,7 @@ var puzzle$1 = /*#__PURE__*/Object.freeze({
 });
 
 var makePuzzle$2 = function () {
-    var dir = "../../src/puzzles/royal_escape/images/";
+    var dir = rootPath + "src/puzzles/royal_escape/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
         green: makeImage(dir + "green.jpg"),
