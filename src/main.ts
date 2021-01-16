@@ -1,9 +1,11 @@
-import { makePuzzleList, onImageLoad } from "./utils";
+import { makePuzzleList, onImageLoad, rootPath } from "./utils";
 import { HTMLRenderer, Block, Board } from "../lib/sliding-puzzle-esm";
 import { CustomSound } from "./sounds";
 
 async function main() {
-  const audioPath = "./src/audio/";
+  const audioPath = rootPath + "src/audio/";
+  console.log({ rootPath, audioPath });
+
   const assets = {
     sounds: {
       // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
