@@ -23,50 +23,12 @@ async function main() {
 
   const puzzles: PuzzleDictionary = {
     CV058: await import("./puzzles/CV058/puzzle"),
+    CV090: await import("./puzzles/CV090/puzzle"),
     CV094: await import("./puzzles/CV094/puzzle"),
     CV097: await import("./puzzles/CV097/puzzle"),
     CV135: await import("./puzzles/CV135/puzzle"),
   };
 
-  loadAppropriatePage(puzzles, assets);
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const audioPath = rootPath + "src/audio/";
-  const assets = {
-    sounds: {
-      // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
-      // suspens: new CustomSound(audioPath + "suspens.wav"),
-      move: new CustomSound(audioPath + "move1.wav"),
-      success: new CustomSound(audioPath + "success.wav"),
-      inPlace: new CustomSound(audioPath + "in_place.wav"),
-      reset: new CustomSound(audioPath + "reset.wav"),
-    },
-  };
-
-  const puzzles: PuzzleDictionary = {
-    CV058: await import("./puzzles/CV058/puzzle"),
-    CV094: await import("./puzzles/CV094/puzzle"),
-    CV097: await import("./puzzles/CV097/puzzle"),
-    CV135: await import("./puzzles/CV135/puzzle"),
-  };
-
-  loadAppropriatePage(puzzles, assets);
-});
-
-function loadAppropriatePage(
-  puzzles: PuzzleDictionary,
-  assets: {
-    sounds: {
-      // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
-      // suspens: new CustomSound(audioPath + "suspens.wav"),
-      move: CustomSound;
-      success: CustomSound;
-      inPlace: CustomSound;
-      reset: CustomSound;
-    };
-  }
-) {
   const params = new URLSearchParams(window.location.search);
   const puzzleName = params.get("puzzle");
 
@@ -169,6 +131,7 @@ function loadAppropriatePage(
             // CustomSound.chain([sounds.suspens, sounds.success])
             //   .onended(() => sounds.ambiant.fade(1));
             // sounds.success.onended(() => sounds.ambiant.fade(1));
+
             sounds.success.play();
           }, 1000);
           wonTheGame = true;
@@ -177,3 +140,5 @@ function loadAppropriatePage(
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", main);

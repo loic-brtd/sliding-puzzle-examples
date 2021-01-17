@@ -1248,132 +1248,134 @@ var CustomSound = /** @class */ (function () {
     return CustomSound;
 }());
 
-document.addEventListener("DOMContentLoaded", function () { return __awaiter(void 0, void 0, void 0, function () {
-    var audioPath, assets, puzzles;
-    var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                audioPath = rootPath + "src/audio/";
-                assets = {
-                    sounds: {
-                        // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
-                        // suspens: new CustomSound(audioPath + "suspens.wav"),
-                        move: new CustomSound(audioPath + "move1.wav"),
-                        success: new CustomSound(audioPath + "success.wav"),
-                        inPlace: new CustomSound(audioPath + "in_place.wav"),
-                        reset: new CustomSound(audioPath + "reset.wav"),
-                    },
-                };
-                _a = {};
-                return [4 /*yield*/, Promise.resolve().then(function () { return puzzle; })];
-            case 1:
-                _a.CV058 = _b.sent();
-                return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$1; })];
-            case 2:
-                _a.CV094 = _b.sent();
-                return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$2; })];
-            case 3:
-                _a.CV097 = _b.sent();
-                return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$3; })];
-            case 4:
-                puzzles = (_a.CV135 = _b.sent(),
-                    _a);
-                loadAppropriatePage(puzzles, assets);
-                return [2 /*return*/];
+function main() {
+    return __awaiter(this, void 0, void 0, function () {
+        function createRenderer(puzzle) {
+            document.querySelector(".loader").remove();
+            var renderer = new HTMLRenderer({
+                container: document.querySelector("#container"),
+                board: puzzle.board,
+                proportions: puzzle.proportions,
+                backgroundImage: puzzle.background,
+            });
+            renderer.onMousePressed(function (x, y) {
+                return puzzle.board.mousePressed(x, y);
+            });
+            renderer.onMouseDragged(function (x, y) {
+                return puzzle.board.mouseDragged(x, y);
+            });
+            renderer.onMouseReleased(function () { return puzzle.board.mouseReleased(); });
+            puzzle.board.on("animation", function (block) { return renderer.render(block); });
+            return renderer;
         }
-    });
-}); });
-function loadAppropriatePage(puzzles, assets) {
-    var params = new URLSearchParams(window.location.search);
-    var puzzleName = params.get("puzzle");
-    if (puzzleName in puzzles) {
-        // Valid puzzle reference
-        var puzzleFactory = puzzles[puzzleName];
-        var puzzle_1 = puzzleFactory.makePuzzle();
-        if (puzzle_1 && puzzle_1.background) {
-            onImageLoad(puzzle_1.background, function () {
-                setupGameLogic({
-                    sounds: assets.sounds,
-                    board: puzzle_1.board,
-                    winningPlace: puzzle_1.winningPlace,
-                    renderer: createRenderer(puzzle_1),
-                });
+        function setupGameLogic(_a) {
+            var sounds = _a.sounds, board = _a.board, winningPlace = _a.winningPlace, renderer = _a.renderer;
+            var wonTheGame = false;
+            var moves = 0;
+            var quitButton = document.querySelector("#quit");
+            var quit = function () { return (window.location.href = rootPath + "?puzzle=home"); };
+            quitButton.addEventListener("click", quit);
+            quitButton.addEventListener("touchstart", quit);
+            var movesElement = document.querySelector("#moves");
+            movesElement.innerHTML = moves.toString();
+            var resetButton = document.querySelector("#reset");
+            var reset = function () {
+                board.restorePositions();
+                moves = 0;
+                wonTheGame = false;
+                renderer.render();
+                movesElement.innerHTML = moves.toString();
+                sounds.reset.play();
+            };
+            resetButton.addEventListener("click", reset);
+            resetButton.addEventListener("touchstart", reset);
+            board.savePositions();
+            board.on("fullMoveEnd", function () {
+                moves++;
+                movesElement.innerHTML = moves.toString();
+            });
+            board.on("moveStart", function (block) {
+                sounds.move.play();
+                // if (!userInteracted) {
+                //   sounds.ambiant.loop();
+                //   userInteracted = true;
+                // }
+            });
+            board.on("moveEnd", function (block) {
+                if (winningPlace(block)) {
+                    sounds.inPlace.play();
+                    if (!wonTheGame) {
+                        // sounds.ambiant.fade(0);
+                        setTimeout(function () {
+                            // CustomSound.chain([sounds.suspens, sounds.success])
+                            //   .onended(() => sounds.ambiant.fade(1));
+                            // sounds.success.onended(() => sounds.ambiant.fade(1));
+                            sounds.success.play();
+                        }, 1000);
+                        wonTheGame = true;
+                    }
+                }
             });
         }
-    }
-    else {
-        // Invalid puzzle reference => go to menu
-        document.querySelector("#container").innerHTML = makePuzzleList(puzzles);
-    }
-    function createRenderer(puzzle) {
-        document.querySelector(".loader").remove();
-        var renderer = new HTMLRenderer({
-            container: document.querySelector("#container"),
-            board: puzzle.board,
-            proportions: puzzle.proportions,
-            backgroundImage: puzzle.background,
-        });
-        renderer.onMousePressed(function (x, y) {
-            return puzzle.board.mousePressed(x, y);
-        });
-        renderer.onMouseDragged(function (x, y) {
-            return puzzle.board.mouseDragged(x, y);
-        });
-        renderer.onMouseReleased(function () { return puzzle.board.mouseReleased(); });
-        puzzle.board.on("animation", function (block) { return renderer.render(block); });
-        return renderer;
-    }
-    function setupGameLogic(_a) {
-        var sounds = _a.sounds, board = _a.board, winningPlace = _a.winningPlace, renderer = _a.renderer;
-        var wonTheGame = false;
-        var moves = 0;
-        var quitButton = document.querySelector("#quit");
-        var quit = function () { return (window.location.href = rootPath + "?puzzle=home"); };
-        quitButton.addEventListener("click", quit);
-        quitButton.addEventListener("touchstart", quit);
-        var movesElement = document.querySelector("#moves");
-        movesElement.innerHTML = moves.toString();
-        var resetButton = document.querySelector("#reset");
-        var reset = function () {
-            board.restorePositions();
-            moves = 0;
-            wonTheGame = false;
-            renderer.render();
-            movesElement.innerHTML = moves.toString();
-            sounds.reset.play();
-        };
-        resetButton.addEventListener("click", reset);
-        resetButton.addEventListener("touchstart", reset);
-        board.savePositions();
-        board.on("fullMoveEnd", function () {
-            moves++;
-            movesElement.innerHTML = moves.toString();
-        });
-        board.on("moveStart", function (block) {
-            sounds.move.play();
-            // if (!userInteracted) {
-            //   sounds.ambiant.loop();
-            //   userInteracted = true;
-            // }
-        });
-        board.on("moveEnd", function (block) {
-            if (winningPlace(block)) {
-                sounds.inPlace.play();
-                if (!wonTheGame) {
-                    // sounds.ambiant.fade(0);
-                    setTimeout(function () {
-                        // CustomSound.chain([sounds.suspens, sounds.success])
-                        //   .onended(() => sounds.ambiant.fade(1));
-                        // sounds.success.onended(() => sounds.ambiant.fade(1));
-                        sounds.success.play();
-                    }, 1000);
-                    wonTheGame = true;
-                }
+        var audioPath, assets, puzzles, params, puzzleName, puzzleFactory, puzzle_1;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    audioPath = rootPath + "src/audio/";
+                    assets = {
+                        sounds: {
+                            // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
+                            // suspens: new CustomSound(audioPath + "suspens.wav"),
+                            move: new CustomSound(audioPath + "move1.wav"),
+                            success: new CustomSound(audioPath + "success.wav"),
+                            inPlace: new CustomSound(audioPath + "in_place.wav"),
+                            reset: new CustomSound(audioPath + "reset.wav"),
+                        },
+                    };
+                    _a = {};
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle; })];
+                case 1:
+                    _a.CV058 = _b.sent();
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$1; })];
+                case 2:
+                    _a.CV090 = _b.sent();
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$2; })];
+                case 3:
+                    _a.CV094 = _b.sent();
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$3; })];
+                case 4:
+                    _a.CV097 = _b.sent();
+                    return [4 /*yield*/, Promise.resolve().then(function () { return puzzle$4; })];
+                case 5:
+                    puzzles = (_a.CV135 = _b.sent(),
+                        _a);
+                    params = new URLSearchParams(window.location.search);
+                    puzzleName = params.get("puzzle");
+                    if (puzzleName in puzzles) {
+                        puzzleFactory = puzzles[puzzleName];
+                        puzzle_1 = puzzleFactory.makePuzzle();
+                        if (puzzle_1 && puzzle_1.background) {
+                            onImageLoad(puzzle_1.background, function () {
+                                setupGameLogic({
+                                    sounds: assets.sounds,
+                                    board: puzzle_1.board,
+                                    winningPlace: puzzle_1.winningPlace,
+                                    renderer: createRenderer(puzzle_1),
+                                });
+                            });
+                        }
+                    }
+                    else {
+                        // Invalid puzzle reference => go to menu
+                        document.querySelector("#container").innerHTML = makePuzzleList(puzzles);
+                    }
+                    return [2 /*return*/];
             }
         });
-    }
+    });
 }
+document.addEventListener("DOMContentLoaded", main);
 
 // [CV058] Get the Ball Out! 1
 var makePuzzle = function () {
@@ -1473,8 +1475,108 @@ var puzzle = /*#__PURE__*/Object.freeze({
     makePuzzle: makePuzzle
 });
 
-// [CV094] Get the Ball Out! 4
+// [CV090] Get the Ball Out! 2
 var makePuzzle$1 = function () {
+    var gtbo2 = rootPath + "src/puzzles/CV090/images/";
+    var gtbo4 = rootPath + "src/puzzles/CV094/images/";
+    var images = {
+        blue: makeImage(gtbo4 + "blue.jpg"),
+        green: makeImage(gtbo4 + "green.jpg"),
+        ball: makeImage(gtbo4 + "ball.png"),
+        yellow: makeImage(gtbo4 + "yellow.jpg"),
+        purple: makeImage(gtbo4 + "purple.jpg"),
+        board: makeImage(gtbo2 + "board.jpg"),
+    };
+    var blueSettings = {
+        shape: [[1, 1]],
+        image: images.blue,
+    };
+    var greenSettings = {
+        shape: [[1], [1]],
+        image: images.green,
+    };
+    var purpleSettings = {
+        shape: [[1]],
+        image: images.purple,
+    };
+    var yellowSettings = {
+        shape: [
+            [1, 1],
+            [1, 1],
+        ],
+        image: images.yellow,
+    };
+    function makeBlock(x, y, settings) {
+        return new Block({
+            x: x,
+            y: y,
+            shape: settings.shape,
+            image: settings.image,
+        });
+    }
+    var ball = new Block({
+        x: 2,
+        y: 0,
+        shape: [[1]],
+        image: images.ball,
+        name: "ball",
+    });
+    var blocks = [
+        makeBlock(1, 1, blueSettings),
+        makeBlock(3, 4, blueSettings),
+        makeBlock(1, 3, greenSettings),
+        makeBlock(4, 1, greenSettings),
+        makeBlock(2, 2, yellowSettings),
+        makeBlock(3, 1, purpleSettings),
+        makeBlock(1, 2, purpleSettings),
+        makeBlock(2, 4, purpleSettings),
+        makeBlock(4, 3, purpleSettings),
+    ];
+    var boundaries = new Block({
+        x: -1,
+        y: -1,
+        shape: [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 0, 1, 1],
+            [1, 1, 0, 0, 0, 0, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 0, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+        ],
+        selectable: false,
+    });
+    var board = new Board({
+        cols: 6,
+        rows: 6,
+    });
+    board.addBlock(boundaries);
+    board.addBlock(ball);
+    blocks.forEach(function (b) { return board.addBlock(b); });
+    return {
+        title: "Get the Ball Out! 2",
+        background: images.board,
+        proportions: {
+            x: 32 / 256,
+            y: 32 / 192,
+            width: 144 / 256,
+            height: 144 / 192,
+        },
+        board: board,
+        winningPlace: function (block) {
+            return block.name === "ball" && block.x === 3 && block.y === 5;
+        },
+    };
+};
+
+var puzzle$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    makePuzzle: makePuzzle$1
+});
+
+// [CV094] Get the Ball Out! 4
+var makePuzzle$2 = function () {
     var path = rootPath + "src/puzzles/CV094/images/";
     var images = {
         blue: makeImage(path + "blue.jpg"),
@@ -1565,13 +1667,13 @@ var makePuzzle$1 = function () {
     };
 };
 
-var puzzle$1 = /*#__PURE__*/Object.freeze({
+var puzzle$2 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    makePuzzle: makePuzzle$1
+    makePuzzle: makePuzzle$2
 });
 
 // [CV097] Maiden's Escape
-var makePuzzle$2 = function () {
+var makePuzzle$3 = function () {
     var dir = rootPath + "src/puzzles/CV135/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
@@ -1666,13 +1768,13 @@ var makePuzzle$2 = function () {
     };
 };
 
-var puzzle$2 = /*#__PURE__*/Object.freeze({
+var puzzle$3 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    makePuzzle: makePuzzle$2
+    makePuzzle: makePuzzle$3
 });
 
 // [CV135] Royal Escape
-var makePuzzle$3 = function () {
+var makePuzzle$4 = function () {
     var dir = rootPath + "src/puzzles/CV135/images/";
     var images = {
         blue: makeImage(dir + "blue.jpg"),
@@ -1765,7 +1867,7 @@ var makePuzzle$3 = function () {
     };
 };
 
-var puzzle$3 = /*#__PURE__*/Object.freeze({
+var puzzle$4 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    makePuzzle: makePuzzle$3
+    makePuzzle: makePuzzle$4
 });
