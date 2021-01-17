@@ -1,8 +1,8 @@
 import { Block, Board } from "../../../lib/sliding-puzzle-esm";
-import { makeImage, rootPath } from "../../utils";
+import { makeImage, Puzzle, rootPath } from "../../utils";
 
 // [CV094] Get the Ball Out! 4
-export const makePuzzle = () => {
+export const makePuzzle = (): Puzzle => {
   const path = rootPath + "src/puzzles/CV094/images/";
   const images = {
     blue: makeImage(path + "blue.jpg"),

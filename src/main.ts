@@ -1,4 +1,10 @@
-import { makePuzzleList, onImageLoad, rootPath } from "./utils";
+import {
+  makePuzzleList,
+  onImageLoad,
+  Puzzle,
+  PuzzleDictionary,
+  rootPath,
+} from "./utils";
 import { HTMLRenderer, Block, Board } from "../lib/sliding-puzzle-esm";
 import { CustomSound } from "./sounds";
 
@@ -15,35 +21,75 @@ async function main() {
     },
   };
 
-  const puzzles = {
+  const puzzles: PuzzleDictionary = {
     CV058: await import("./puzzles/CV058/puzzle"),
     CV094: await import("./puzzles/CV094/puzzle"),
     CV097: await import("./puzzles/CV097/puzzle"),
     CV135: await import("./puzzles/CV135/puzzle"),
   };
 
+  loadAppropriatePage(puzzles, assets);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const audioPath = rootPath + "src/audio/";
+  const assets = {
+    sounds: {
+      // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
+      // suspens: new CustomSound(audioPath + "suspens.wav"),
+      move: new CustomSound(audioPath + "move1.wav"),
+      success: new CustomSound(audioPath + "success.wav"),
+      inPlace: new CustomSound(audioPath + "in_place.wav"),
+      reset: new CustomSound(audioPath + "reset.wav"),
+    },
+  };
+
+  const puzzles: PuzzleDictionary = {
+    CV058: await import("./puzzles/CV058/puzzle"),
+    CV094: await import("./puzzles/CV094/puzzle"),
+    CV097: await import("./puzzles/CV097/puzzle"),
+    CV135: await import("./puzzles/CV135/puzzle"),
+  };
+
+  loadAppropriatePage(puzzles, assets);
+});
+
+function loadAppropriatePage(
+  puzzles: PuzzleDictionary,
+  assets: {
+    sounds: {
+      // ambiant: new CustomSound(audioPath + puzzle_theme.mp3"),
+      // suspens: new CustomSound(audioPath + "suspens.wav"),
+      move: CustomSound;
+      success: CustomSound;
+      inPlace: CustomSound;
+      reset: CustomSound;
+    };
+  }
+) {
   const params = new URLSearchParams(window.location.search);
   const puzzleName = params.get("puzzle");
 
   if (puzzleName in puzzles) {
+    // Valid puzzle reference
     const puzzleFactory = puzzles[puzzleName];
     const puzzle = puzzleFactory.makePuzzle();
     if (puzzle && puzzle.background) {
       onImageLoad(puzzle.background, () => {
-        const renderer = setupRenderer(puzzle);
         setupGameLogic({
           sounds: assets.sounds,
           board: puzzle.board,
           winningPlace: puzzle.winningPlace,
-          renderer: renderer,
+          renderer: createRenderer(puzzle),
         });
       });
     }
   } else {
+    // Invalid puzzle reference => go to menu
     document.querySelector("#container").innerHTML = makePuzzleList(puzzles);
   }
 
-  function setupRenderer(puzzle) {
+  function createRenderer(puzzle: Puzzle) {
     document.querySelector(".loader").remove();
 
     const renderer = new HTMLRenderer({
@@ -123,7 +169,6 @@ async function main() {
             // CustomSound.chain([sounds.suspens, sounds.success])
             //   .onended(() => sounds.ambiant.fade(1));
             // sounds.success.onended(() => sounds.ambiant.fade(1));
-
             sounds.success.play();
           }, 1000);
           wonTheGame = true;
@@ -132,5 +177,3 @@ async function main() {
     });
   }
 }
-
-document.addEventListener("DOMContentLoaded", main);
