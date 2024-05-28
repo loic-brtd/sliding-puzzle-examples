@@ -1,7 +1,7 @@
 import { Board, Block } from "../lib/sliding-puzzle-esm";
 
 export const rootPath = document.URL.includes("github")
-  ? "https://lobertrand.github.io/sliding-puzzle-examples/"
+  ? "https://loic-brtd.github.io/sliding-puzzle-examples/"
   : "";
 
 export function makeImage(url: string) {
