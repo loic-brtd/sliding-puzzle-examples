@@ -2,4 +2,4 @@
 
 Examples for the sliding-puzzle library, based on Professor Layton's puzzles.
 
-Live demo : https://lobertrand.github.io/sliding-puzzle-examples/
+Live demo : https://loic-brtd.github.io/sliding-puzzle-examples/
