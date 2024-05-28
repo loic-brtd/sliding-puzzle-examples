@@ -81,7 +81,7 @@ function __read(o, n) {
 }
 
 var rootPath = document.URL.includes("github")
-    ? "https://lobertrand.github.io/sliding-puzzle-examples/"
+    ? "https://loic-brtd.github.io/sliding-puzzle-examples/"
     : "";
 function makeImage(url) {
     var image = new Image();
